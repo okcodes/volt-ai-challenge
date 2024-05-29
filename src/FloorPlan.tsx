@@ -141,6 +141,11 @@ export const FloorPlan = () => {
 
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
       camera.position.y = 10;
+      // Make camera focus the building
+      camera.position.x = -5;
+      camera.position.z = -10;
+      camera.rotateY(9.9)
+      camera.rotateX(-.5)
 
       scene.current.background = new THREE.Color(0xffffff);
       scene.current.fog = new THREE.Fog(0xffffff, 0, 750);
