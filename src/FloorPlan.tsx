@@ -9,6 +9,7 @@ export const FloorPlan = () => {
   // const objects = useRef<THREE.Object3D[]>([]);
   const objects = useRef<THREE.Mesh[]>([]);
   const scene = useRef(new THREE.Scene());
+  const boxGeometry = useRef(new THREE.BoxGeometry(20, 20, 20).toNonIndexed());
 
   const onKeyPressed = (event: KeyboardEvent) => {
     if (event.code === 'KeyM') {
@@ -188,9 +189,7 @@ export const FloorPlan = () => {
 
       // objects
 
-      const boxGeometry = new THREE.BoxGeometry(20, 20, 20).toNonIndexed();
-
-      position = boxGeometry.attributes.position;
+      position = boxGeometry.current.attributes.position;
       const colorsBox = [];
 
       for (let i = 0, l = position.count; i < l; i++) {
@@ -200,7 +199,7 @@ export const FloorPlan = () => {
 
       }
 
-      boxGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colorsBox, 3));
+      boxGeometry.current.setAttribute('color', new THREE.Float32BufferAttribute(colorsBox, 3));
 
       for (let i = 0; i < 500; i++) {
 
@@ -211,7 +210,7 @@ export const FloorPlan = () => {
         });
         boxMaterial.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace);
 
-        const box = new THREE.Mesh(boxGeometry, boxMaterial);
+        const box = new THREE.Mesh(boxGeometry.current, boxMaterial);
         box.position.x = Math.floor(Math.random() * 20 - 10) * 20;
         box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
         box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
