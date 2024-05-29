@@ -123,8 +123,30 @@ export const FloorPlan = () => {
       level.locations.forEach((location) => {
         location.windows?.forEach(spawnWindow)
         location.doors?.forEach(spawnDoor)
+        location.boundary.points.forEach(spawnPoint)
       })
     })
+  }
+
+  // Create a material for the sphere
+  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color for the sphere
+
+  const spawnPoint = (sphereStructure: Volt.Point) => {
+    // Create the sphere geometry
+    const sphereRadius = 0.1; // Define a small radius for the sphere
+    const sphereGeometry = new THREE.SphereGeometry(sphereRadius, 32, 32);
+
+    // Create the sphere mesh
+    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+    // Position the sphere mesh
+    const spherePositionX = sphereStructure.x;
+    const spherePositionY = sphereRadius; // Slightly above the ground
+    const spherePositionZ = sphereStructure.y;
+    sphereMesh.position.set(spherePositionX, spherePositionY, spherePositionZ);
+
+    // Add the sphere mesh to the scene
+    scene.current.add(sphereMesh);
   }
 
   const spawnCubeZero = () => {
