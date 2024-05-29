@@ -10,6 +10,13 @@ import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 
 const fontLoader = new FontLoader();
 
+const wallMaterialExterior = new THREE.MeshStandardMaterial({color: 0xff8080});
+const wallMaterialInterior = new THREE.MeshStandardMaterial({color: 0x8080ff});
+const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff, opacity: 0.1, transparent: true});
+const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 }); // Black color for the text
+const doorMaterial = new THREE.MeshStandardMaterial({color: 0x8B4513}); // Brown color for a wooden door
+const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 }); // Red color for the sphere
+
 export const FloorPlan = () => {
 
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -35,9 +42,6 @@ export const FloorPlan = () => {
     objects.current.push(box);
   }
 
-  const wallMaterialExterior = new THREE.MeshStandardMaterial({color: 0xff8080});
-  const wallMaterialInterior = new THREE.MeshStandardMaterial({color: 0x8080ff});
-
   const spawnWall = (wall: Volt.Wall, material: THREE.Material) => {
     // Create the wall geometry
     const width = Math.abs(wall.x2 - wall.x1);
@@ -59,10 +63,6 @@ export const FloorPlan = () => {
     // Add the wall mesh to the scene
     scene.current.add(wallMesh);
   }
-
-  // Create a material for the window (e.g., a transparent material to simulate glass)
-  const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff});
-  // const windowMaterial = new THREE.MeshBasicMaterial({color: 0xAAAAAA, opacity: 0.6, transparent: true});
 
   const spawnWindow = (windowStructure: Volt.Window) => {
     // Create the window geometry
@@ -100,9 +100,6 @@ export const FloorPlan = () => {
         curveSegments: 12,
       });
 
-      // Create a material for the text
-      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Black color for the text
-
       // Create the text mesh
       const textMesh = new THREE.Mesh(textGeometry, textMaterial);
 
@@ -115,9 +112,6 @@ export const FloorPlan = () => {
     })
 
   }
-
-  // Create a material for the door
-  const doorMaterial = new THREE.MeshBasicMaterial({color: 0x8B4513}); // Brown color for a wooden door
 
   const spawnDoor = (doorStructure: Volt.Door) => {
     // Create the door geometry
@@ -157,9 +151,6 @@ export const FloorPlan = () => {
       })
     })
   }
-
-  // Create a material for the sphere
-  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color for the sphere
 
   const spawnPoint = (sphereStructure: Volt.Point) => {
     // Create the sphere geometry
@@ -394,7 +385,7 @@ export const FloorPlan = () => {
       spawnCubeZero()
       spawnFloorPlan()
 
-      renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       // Original appended to the body, but in react we append to a div within this component.
