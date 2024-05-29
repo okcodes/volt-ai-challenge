@@ -10,12 +10,13 @@ import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
 
 const fontLoader = new FontLoader();
 
-const wallMaterialExterior = new THREE.MeshStandardMaterial({color: 0xff8080});
-const wallMaterialInterior = new THREE.MeshStandardMaterial({color: 0x8080ff});
-const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff, opacity: 0.1, transparent: true});
-const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
-const doorMaterial = new THREE.MeshStandardMaterial({color: 0x8B4513});
-const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+const wallMaterialExterior = new THREE.MeshStandardMaterial({ color: 0xB0B0B0, opacity: 0.5, transparent: true });
+const wallMaterialInterior = new THREE.MeshStandardMaterial({ color: 0x707070, opacity: 0.5, transparent: true }); 
+const windowMaterial = new THREE.MeshStandardMaterial({ color: 0x87CEEB, opacity: 0.3, transparent: true });
+const textMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+const doorMaterial = new THREE.MeshStandardMaterial({ color: 0xA0522D, opacity: 0.5, transparent: true });
+const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+
 
 export const FloorPlan = () => {
 
