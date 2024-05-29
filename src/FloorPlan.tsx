@@ -218,11 +218,10 @@ export const FloorPlan = () => {
 
       boxGeometry.current.setAttribute('color', new THREE.Float32BufferAttribute(colorsBox, 3));
 
-      for (let i = 0; i < 500; i++) {
-        spawnRandomCube()
-      }
-
-      //
+      // Don't spawn cubes for now
+      // for (let i = 0; i < 500; i++) {
+      //   spawnRandomCube()
+      // }
 
       renderer = new THREE.WebGLRenderer({antialias: true});
       renderer.setPixelRatio(window.devicePixelRatio);
