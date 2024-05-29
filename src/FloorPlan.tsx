@@ -28,9 +28,27 @@ export const FloorPlan = () => {
     objects.current.push(box);
   }
 
+  const spawnCubeZero = () => {
+    const boxMaterial = new THREE.MeshPhongMaterial({
+      specular: 0xffffff,
+      flatShading: true,
+      vertexColors: true
+    });
+    boxMaterial.color.setHSL(Math.random() * 0.2 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace);
+
+    const box = new THREE.Mesh(boxGeometry.current, boxMaterial);
+    box.position.x = 0; // Right/Left
+    box.position.y = 10; // Up/Down
+    box.position.z = -100; // Front/Back
+
+    scene.current.add(box);
+    objects.current.push(box);
+  }
+
   const onKeyPressed = (event: KeyboardEvent) => {
     if (event.code === 'KeyM') {
       console.log('M pressed')
+      spawnCubeZero();
     }
   }
 
