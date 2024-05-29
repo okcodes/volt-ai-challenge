@@ -1,5 +1,7 @@
 # VOLT.ai Coding Challenge
 
+[Live Demo](https://cienfuegos.io)
+
 To run this demo just
 
 You will need pnpm installed
