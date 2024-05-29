@@ -2,6 +2,7 @@ import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 import './FloorPlan.css'
 import {PointerLockControls} from "three/examples/jsm/controls/PointerLockControls";
+import {demoFloorPlan} from "./DemoFloorPlan.ts";
 import {Volt} from "./FlootPlan";
 
 export const FloorPlan = () => {
@@ -54,6 +55,47 @@ export const FloorPlan = () => {
     scene.current.add(wallMesh);
   }
 
+  // Create a material for the window (e.g., a transparent material to simulate glass)
+  const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff});
+  // const windowMaterial = new THREE.MeshBasicMaterial({color: 0xAAAAAA, opacity: 0.6, transparent: true});
+
+  const spawnWindow = (windowStructure: Volt.Window) => {
+    // Create the window geometry
+    const windowWidth = windowStructure.width;
+    const windowHeight = windowStructure.height;
+    const windowDepth = windowStructure.depth;
+    const windowGeometry = new THREE.BoxGeometry(windowWidth, windowHeight, windowDepth);
+
+    // Create the window mesh
+    const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+
+    // Position the window mesh
+    const windowCenterX = (windowStructure.leftPositionX + windowStructure.rightPositionX) / 2;
+    const windowCenterY = windowStructure.distanceFromFloor + (windowHeight / 2);
+    const windowCenterZ = (windowStructure.leftPositionY + windowStructure.rightPositionY) / 2;
+    windowMesh.position.set(windowCenterX, windowCenterY, windowCenterZ);
+
+    // Rotate the window to align with the wall if necessary
+    const windowAngle = Math.atan2(
+      windowStructure.rightPositionY - windowStructure.leftPositionY,
+      windowStructure.rightPositionX - windowStructure.leftPositionX
+    );
+    windowMesh.rotation.y = -windowAngle; // Adjust the rotation direction if needed
+
+    // Add the window mesh to the scene
+    scene.current.add(windowMesh);
+  }
+
+  const spawnFloorPlan = () => {
+    demoFloorPlan.levels.forEach((level) => {
+      level.walls.filter(_ => _.type === 'EXTERIOR').forEach(w => spawnWall(w, wallMaterialExterior))
+      level.walls.filter(_ => _.type === 'INTERIOR').forEach(w => spawnWall(w, wallMaterialInterior))
+      level.locations.forEach((location) => {
+        location.windows.forEach(spawnWindow)
+      })
+    })
+  }
+
   const spawnCubeZero = () => {
     const boxMaterial = new THREE.MeshPhongMaterial({
       specular: 0xffffff,
@@ -71,16 +113,8 @@ export const FloorPlan = () => {
     objects.current.push(box);
   }
 
-  const onKeyPressed = (event: KeyboardEvent) => {
-    if (event.code === 'KeyM') {
-      console.log('M pressed')
-      spawnCubeZero();
-    }
-  }
-
   useEffect(() => {
 
-    document.addEventListener('keyup', onKeyPressed);
     let camera, renderer, controls;
 
     objects.current = [];
@@ -266,6 +300,8 @@ export const FloorPlan = () => {
       // for (let i = 0; i < 500; i++) {
       //   spawnRandomCube()
       // }
+      spawnCubeZero()
+      spawnFloorPlan()
 
       renderer = new THREE.WebGLRenderer({antialias: true});
       renderer.setPixelRatio(window.devicePixelRatio);
@@ -350,7 +386,6 @@ export const FloorPlan = () => {
     // Clean up on unmount
     return () => {
       mountRef.current?.removeChild(renderer.domElement);
-      document.removeEventListener('keyup', onKeyPressed)
     };
   }, []);
 
