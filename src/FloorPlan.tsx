@@ -2,6 +2,7 @@ import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 import './FloorPlan.css'
 import {PointerLockControls} from "three/examples/jsm/controls/PointerLockControls";
+import {Volt} from "./FlootPlan";
 
 export const FloorPlan = () => {
 
@@ -26,6 +27,31 @@ export const FloorPlan = () => {
 
     scene.current.add(box);
     objects.current.push(box);
+  }
+
+  const wallMaterialExterior = new THREE.MeshStandardMaterial({color: 0xff8080});
+  const wallMaterialInterior = new THREE.MeshStandardMaterial({color: 0x8080ff});
+
+  const spawnWall = (wall: Volt.Wall, material: THREE.Material) => {
+    // Create the wall geometry
+    const width = Math.abs(wall.x2 - wall.x1);
+    const height = wall.height;
+    const depth = Math.abs(wall.y2 - wall.y1);
+    const wallGeometry = new THREE.BoxGeometry(width, height, depth);
+
+
+    // Create the wall mesh
+    const wallMesh = new THREE.Mesh(wallGeometry, material);
+
+    // Position the wall mesh
+    wallMesh.position.set(
+      (wall.x1 + wall.x2) / 2, // X position (centered between x1 and x2)
+      height / 2,              // Y position (half the height)
+      (wall.y1 + wall.y2) / 2  // Z position (centered between y1 and y2)
+    );
+
+    // Add the wall mesh to the scene
+    scene.current.add(wallMesh);
   }
 
   const spawnCubeZero = () => {
