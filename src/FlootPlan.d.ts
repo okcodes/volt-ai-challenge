@@ -13,8 +13,8 @@ export namespace Volt {
   export interface Level {
     id: string; // uuid
     magicplanUid: string;
-    label: string; // custom name of the level
-    floorLevel: number; // basement, level 1, level 2 ..
+    label?: string; // custom name of the level
+    floorLevel?: number; // basement, level 1, level 2 ..
     locations: Location[]; // different areas within the Level
     walls: Wall[]; // wall objects within the level
   }
@@ -26,7 +26,7 @@ export namespace Volt {
     y1: number;
     y2: number;
     height: number;
-    thickness: number;
+    thickness?: number;
     type: WallType;
   }
 
@@ -36,7 +36,7 @@ export namespace Volt {
     magicplanUid: string;
     boundary: Boundary;
     windows: Window[];
-    doors: Door[];
+    doors?: Door[];
   }
 
   export interface Window {
@@ -51,14 +51,14 @@ export namespace Volt {
     height: number;
     depth: number;
     distanceFromFloor: number;
-    type: WindowType;
+    type?: WindowType;
   }
 
   export interface Door {
     id: string;
     magicplanUid: string;
-    twinMagicplanUid: string;
-    leadsTo: Location[];
+    twinMagicplanUid?: string;
+    leadsTo?: Location[];
     label: string;
     hingePositionX: number;
     hingePositionY: number;
@@ -68,21 +68,21 @@ export namespace Volt {
     height: number;
     depth: number;
     direction: number;
-    type: DoorType;
+    type?: DoorType;
   }
 
   export interface Boundary {
     id: string;
     points: Point[];
-    height: number;
+    height?: number;
   }
 
   export interface Point {
     id: string;
     magicplanUid: string;
-    index: number;
+    index?: number;
     x: number;
     y: number;
-    z: number;
+    z?: number;
   }
 }
