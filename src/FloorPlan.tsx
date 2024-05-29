@@ -9,8 +9,15 @@ export const FloorPlan = () => {
   // const objects = useRef<THREE.Object3D[]>([]);
   const objects = useRef<THREE.Mesh[]>([]);
 
+  const onKeyPressed = (event: KeyboardEvent) => {
+    if (event.code === 'KeyM') {
+      console.log('M pressed')
+    }
+  }
+
   useEffect(() => {
 
+    document.addEventListener('keyup', onKeyPressed);
     let camera, scene, renderer, controls;
 
     objects.current = [];
@@ -299,6 +306,7 @@ export const FloorPlan = () => {
     // Clean up on unmount
     return () => {
       mountRef.current?.removeChild(renderer.domElement);
+      document.removeEventListener('keyup', onKeyPressed)
     };
   }, []);
 
@@ -315,6 +323,9 @@ export const FloorPlan = () => {
             Look: MOUSE
           </p>
         </div>
+      </div>
+      <div style={{position: 'fixed', top: 0, left: 0, padding: '0 8px', backgroundColor: 'rgba(0,0,0,.5)'}}>Press M to
+        add box
       </div>
       <div ref={mountRef}/>
     </>
