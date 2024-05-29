@@ -16,7 +16,7 @@ export namespace Volt {
     magicplanUid: string;
     label: string;
     boundary: Boundary;
-    windows: Window[];
+    windows: WindowStructure[];
     doors?: Door[];
   }
 
@@ -49,7 +49,7 @@ export namespace Volt {
     type?: string;
   }
 
-  export interface Window {
+  export interface WindowStructure {
     id: string;
     magicplanUid: string;
     label: string;
