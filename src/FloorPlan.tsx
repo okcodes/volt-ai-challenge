@@ -2,8 +2,12 @@ import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 import './FloorPlan.css'
 import {PointerLockControls} from "three/examples/jsm/controls/PointerLockControls";
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import {demoFloorPlan} from "./DemoFloorPlan.ts";
 import {Volt} from "./FlootPlan";
+import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
+
+const fontLoader = new FontLoader();
 
 export const FloorPlan = () => {
 
@@ -84,6 +88,31 @@ export const FloorPlan = () => {
 
     // Add the window mesh to the scene
     scene.current.add(windowMesh);
+
+    fontLoader.load('/helvetiker_regular.typeface.json', font => {
+
+      // Create the text geometry
+      const textGeometry = new TextGeometry(windowStructure.label, {
+        font,
+        size: 0.2,
+        height: 0.05,
+        curveSegments: 12,
+      });
+
+      // Create a material for the text
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Black color for the text
+
+      // Create the text mesh
+      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+      // Position the text mesh near the window
+      textMesh.position.set(windowCenterX, windowCenterY + windowHeight / 2 + 0.2, windowCenterZ);
+      textMesh.rotation.y = -windowAngle; // Rotate the text to align with the window
+
+      // Add the text mesh to the scene
+      scene.current.add(textMesh);
+    })
+
   }
 
   // Create a material for the door
