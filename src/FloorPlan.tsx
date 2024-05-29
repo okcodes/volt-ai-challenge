@@ -224,7 +224,7 @@ export const FloorPlan = () => {
     function init() {
       if (!mountRef.current) return
 
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+      camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
       camera.position.y = 10;
       // Make camera focus the building
       camera.position.x = -5;
