@@ -106,8 +106,10 @@ export const FloorPlan = () => {
 
     const box = new THREE.Mesh(boxGeometry.current, boxMaterial);
     box.position.x = 0; // Right/Left
-    box.position.y = 10; // Up/Down
+    box.position.y = 0; // Up/Down
     box.position.z = -100; // Front/Back
+
+    box.scale.set(.05, .05, .05)
 
     scene.current.add(box);
     objects.current.push(box);
