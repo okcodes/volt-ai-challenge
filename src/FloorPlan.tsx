@@ -494,9 +494,6 @@ export const FloorPlan = () => {
           </p>
         </div>
       </div>
-      <div style={{position: 'fixed', top: 0, left: 0, padding: '0 8px', backgroundColor: 'rgba(0,0,0,.5)'}}>Press M to
-        add box
-      </div>
       <div ref={mountRef}/>
     </>
   )
