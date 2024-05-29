@@ -6,12 +6,14 @@ import {PointerLockControls} from "three/examples/jsm/controls/PointerLockContro
 export const FloorPlan = () => {
 
   const mountRef = useRef<HTMLDivElement | null>(null);
+  // const objects = useRef<THREE.Object3D[]>([]);
+  const objects = useRef<THREE.Mesh[]>([]);
 
   useEffect(() => {
 
     let camera, scene, renderer, controls;
 
-    const objects = [];
+    objects.current = [];
 
     let raycaster;
 
@@ -208,7 +210,7 @@ export const FloorPlan = () => {
         box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
 
         scene.add(box);
-        objects.push(box);
+        objects.current.push(box);
 
       }
 
@@ -247,7 +249,7 @@ export const FloorPlan = () => {
         raycaster.ray.origin.copy(controls.getObject().position);
         raycaster.ray.origin.y -= 10;
 
-        const intersections = raycaster.intersectObjects(objects, false);
+        const intersections = raycaster.intersectObjects(objects.current, false);
 
         const onObject = intersections.length > 0;
 
