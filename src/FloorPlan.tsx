@@ -59,7 +59,7 @@ export const FloorPlan = () => {
   const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff});
   // const windowMaterial = new THREE.MeshBasicMaterial({color: 0xAAAAAA, opacity: 0.6, transparent: true});
 
-  const spawnWindow = (windowStructure: Volt.WindowStructure) => {
+  const spawnWindow = (windowStructure: Volt.Window) => {
     // Create the window geometry
     const windowWidth = windowStructure.width;
     const windowHeight = windowStructure.height;
