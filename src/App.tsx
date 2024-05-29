@@ -1,11 +1,10 @@
-import Box from './Box'
+import {FloorPlan} from "./FloorPlan.tsx";
 
 function App() {
 
   return (
     <>
-    <h1>Floor Plan</h1>
-    <Box/>
+      <FloorPlan/>
     </>
   )
 }
