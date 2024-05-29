@@ -13,9 +13,9 @@ const fontLoader = new FontLoader();
 const wallMaterialExterior = new THREE.MeshStandardMaterial({color: 0xff8080});
 const wallMaterialInterior = new THREE.MeshStandardMaterial({color: 0x8080ff});
 const windowMaterial = new THREE.MeshStandardMaterial({color: 0x2020ff, opacity: 0.1, transparent: true});
-const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 }); // Black color for the text
-const doorMaterial = new THREE.MeshStandardMaterial({color: 0x8B4513}); // Brown color for a wooden door
-const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 }); // Red color for the sphere
+const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+const doorMaterial = new THREE.MeshStandardMaterial({color: 0x8B4513});
+const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
 
 export const FloorPlan = () => {
 
