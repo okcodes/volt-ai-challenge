@@ -155,7 +155,7 @@ export const FloorPlan = () => {
 
   const spawnPoint = (sphereStructure: Volt.Point) => {
     // Create the sphere geometry
-    const sphereRadius = 0.1; // Define a small radius for the sphere
+    const sphereRadius = 0.05; // Define a small radius for the sphere
     const sphereGeometry = new THREE.SphereGeometry(sphereRadius, 32, 32);
 
     // Create the sphere mesh
