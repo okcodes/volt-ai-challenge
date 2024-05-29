@@ -1,9 +1,11 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import * as THREE from 'three';
 import './FloorPlan.css'
 import {PointerLockControls} from "three/examples/jsm/controls/PointerLockControls";
 
 export const FloorPlan = () => {
+
+  const mountRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
 
@@ -29,6 +31,7 @@ export const FloorPlan = () => {
     animate();
 
     function init() {
+      if (!mountRef.current) return
 
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
       camera.position.y = 10;
@@ -214,7 +217,9 @@ export const FloorPlan = () => {
       renderer = new THREE.WebGLRenderer({antialias: true});
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+      // Original appended to the body, but in react we append to a div within this component.
+      // document.body.appendChild(renderer.domElement);
+      mountRef.current.appendChild(renderer.domElement);
 
       //
 
@@ -289,18 +294,27 @@ export const FloorPlan = () => {
 
     }
 
+    // Clean up on unmount
+    return () => {
+      mountRef.current?.removeChild(renderer.domElement);
+    };
   }, []);
 
-  return <div id="blocker">
-    <div id="instructions">
-      <p style={{fontSize: '36px'}}>
-        Click to play
-      </p>
-      <p>
-        Move: WASD<br/>
-        Jump: SPACE<br/>
-        Look: MOUSE
-      </p>
-    </div>
-  </div>
+  return (
+    <>
+      <div id="blocker">
+        <div id="instructions">
+          <p style={{fontSize: '36px'}}>
+            Click to play
+          </p>
+          <p>
+            Move: WASD<br/>
+            Jump: SPACE<br/>
+            Look: MOUSE
+          </p>
+        </div>
+      </div>
+      <div ref={mountRef}/>
+    </>
+  )
 }
