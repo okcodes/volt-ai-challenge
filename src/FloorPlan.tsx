@@ -171,26 +171,26 @@ export const FloorPlan = () => {
 
       // vertex displacement
 
-      let position = floorGeometry.attributes.position;
+      let floorPosition = floorGeometry.attributes.position;
 
-      for (let i = 0, l = position.count; i < l; i++) {
+      for (let i = 0, l = floorPosition.count; i < l; i++) {
 
-        vertex.fromBufferAttribute(position, i);
+        vertex.fromBufferAttribute(floorPosition, i);
 
         vertex.x += Math.random() * 20 - 10;
         vertex.y += Math.random() * 2;
         vertex.z += Math.random() * 20 - 10;
 
-        position.setXYZ(i, vertex.x, vertex.y, vertex.z);
+        floorPosition.setXYZ(i, vertex.x, vertex.y, vertex.z);
 
       }
 
       floorGeometry = floorGeometry.toNonIndexed(); // ensure each face has unique vertices
 
-      position = floorGeometry.attributes.position;
+      floorPosition = floorGeometry.attributes.position;
       const colorsFloor = [];
 
-      for (let i = 0, l = position.count; i < l; i++) {
+      for (let i = 0, l = floorPosition.count; i < l; i++) {
 
         color.setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace);
         colorsFloor.push(color.r, color.g, color.b);
@@ -206,10 +206,10 @@ export const FloorPlan = () => {
 
       // objects
 
-      position = boxGeometry.current.attributes.position;
+      const boxPosition = boxGeometry.current.attributes.position;
       const colorsBox = [];
 
-      for (let i = 0, l = position.count; i < l; i++) {
+      for (let i = 0, l = boxPosition.count; i < l; i++) {
 
         color.setHSL(Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75, THREE.SRGBColorSpace);
         colorsBox.push(color.r, color.g, color.b);
