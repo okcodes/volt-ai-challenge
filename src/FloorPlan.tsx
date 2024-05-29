@@ -86,12 +86,43 @@ export const FloorPlan = () => {
     scene.current.add(windowMesh);
   }
 
+  // Create a material for the door
+  const doorMaterial = new THREE.MeshBasicMaterial({color: 0x8B4513}); // Brown color for a wooden door
+
+  const spawnDoor = (doorStructure: Volt.Door) => {
+    // Create the door geometry
+    const doorWidth = doorStructure.width;
+    const doorHeight = doorStructure.height;
+    const doorDepth = doorStructure.depth;
+    const doorGeometry = new THREE.BoxGeometry(doorWidth, doorHeight, doorDepth);
+
+    // Create the door mesh
+    const doorMesh = new THREE.Mesh(doorGeometry, doorMaterial);
+
+    // Position the door mesh
+    const doorCenterX = (doorStructure.hingePositionX + doorStructure.latchPositionX) / 2;
+    const doorCenterY = doorHeight / 2;
+    const doorCenterZ = (doorStructure.hingePositionY + doorStructure.latchPositionY) / 2;
+    doorMesh.position.set(doorCenterX, doorCenterY, doorCenterZ);
+
+    // Rotate the door to align with the wall if necessary
+    const doorAngle = Math.atan2(
+      doorStructure.latchPositionY - doorStructure.hingePositionY,
+      doorStructure.latchPositionX - doorStructure.hingePositionX
+    );
+    doorMesh.rotation.y = -doorAngle; // Adjust the rotation direction if needed
+
+    // Add the door mesh to the scene
+    scene.current.add(doorMesh);
+  }
+
   const spawnFloorPlan = () => {
     demoFloorPlan.levels.forEach((level) => {
       level.walls.filter(_ => _.type === 'EXTERIOR').forEach(w => spawnWall(w, wallMaterialExterior))
       level.walls.filter(_ => _.type === 'INTERIOR').forEach(w => spawnWall(w, wallMaterialInterior))
       level.locations.forEach((location) => {
-        location.windows.forEach(spawnWindow)
+        location.windows?.forEach(spawnWindow)
+        location.doors?.forEach(spawnDoor)
       })
     })
   }
