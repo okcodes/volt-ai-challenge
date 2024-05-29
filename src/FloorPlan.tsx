@@ -71,7 +71,7 @@ export const FloorPlan = () => {
 
       scene.add(controls.getObject());
 
-      const onKeyDown = function (event) {
+      const onKeyDown = function (event: KeyboardEvent) {
 
         switch (event.code) {
 
@@ -104,7 +104,7 @@ export const FloorPlan = () => {
 
       };
 
-      const onKeyUp = function (event) {
+      const onKeyUp = function (event: KeyboardEvent) {
 
         switch (event.code) {
 
