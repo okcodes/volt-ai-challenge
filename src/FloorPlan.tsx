@@ -8,6 +8,7 @@ export const FloorPlan = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   // const objects = useRef<THREE.Object3D[]>([]);
   const objects = useRef<THREE.Mesh[]>([]);
+  const scene = useRef(new THREE.Scene());
 
   const onKeyPressed = (event: KeyboardEvent) => {
     if (event.code === 'KeyM') {
@@ -18,7 +19,7 @@ export const FloorPlan = () => {
   useEffect(() => {
 
     document.addEventListener('keyup', onKeyPressed);
-    let camera, scene, renderer, controls;
+    let camera, renderer, controls;
 
     objects.current = [];
 
@@ -45,13 +46,12 @@ export const FloorPlan = () => {
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
       camera.position.y = 10;
 
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xffffff);
-      scene.fog = new THREE.Fog(0xffffff, 0, 750);
+      scene.current.background = new THREE.Color(0xffffff);
+      scene.current.fog = new THREE.Fog(0xffffff, 0, 750);
 
       const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 2.5);
       light.position.set(0.5, 1, 0.75);
-      scene.add(light);
+      scene.current.add(light);
 
       controls = new PointerLockControls(camera, document.body);
 
@@ -78,7 +78,7 @@ export const FloorPlan = () => {
 
       });
 
-      scene.add(controls.getObject());
+      scene.current.add(controls.getObject());
 
       const onKeyDown = function (event: KeyboardEvent) {
 
@@ -184,7 +184,7 @@ export const FloorPlan = () => {
       const floorMaterial = new THREE.MeshBasicMaterial({vertexColors: true});
 
       const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-      scene.add(floor);
+      scene.current.add(floor);
 
       // objects
 
@@ -216,7 +216,7 @@ export const FloorPlan = () => {
         box.position.y = Math.floor(Math.random() * 20) * 20 + 10;
         box.position.z = Math.floor(Math.random() * 20 - 10) * 20;
 
-        scene.add(box);
+        scene.current.add(box);
         objects.current.push(box);
 
       }
@@ -299,7 +299,7 @@ export const FloorPlan = () => {
 
       prevTime = time;
 
-      renderer.render(scene, camera);
+      renderer.render(scene.current, camera);
 
     }
 
