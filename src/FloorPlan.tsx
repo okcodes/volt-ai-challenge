@@ -256,7 +256,8 @@ export const FloorPlan = () => {
         vertex.fromBufferAttribute(floorPosition, i);
 
         vertex.x += Math.random() * 20 - 10;
-        vertex.y += Math.random() * 2;
+        // vertex.y += Math.random() * 2; // Don't use this, it will make the floor height very random (too high, or low).
+        vertex.y += Math.random() * .01; // Floor height almost zero.
         vertex.z += Math.random() * 20 - 10;
 
         floorPosition.setXYZ(i, vertex.x, vertex.y, vertex.z);
